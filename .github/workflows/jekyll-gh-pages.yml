@@ -1,0 +1,57 @@
+# Workflow for deploying static content with audio to GitHub Pages
+name: Deploy static content with audio to Pages
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Permissions for GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Concurrency settings
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Ensure the audio link is included as it is in your repository
+      - name: Validate assets
+        run: |
+          echo "Ensuring all assets, including audio files, are deployed..."
+          if [ ! -f ./Aa.mp3 ]; then
+            echo "Audio file Aa.mp3 not found!"
+            exit 1
+          fi
+          echo "Assets validated."
+
+      # Setup GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # Upload all files, including your specific audio file link
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

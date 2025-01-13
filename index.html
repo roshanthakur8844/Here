@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Flip Card</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle, #050505, #000000);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      color: white;
+    }
+
+    /* Flip card container */
+    .flip-card-container {
+      perspective: 1500px;
+      position: relative;
+      width: 90%; /* Adjusted for mobile screens */
+      max-width: 320px; /* Maintain a maximum size for larger screens */
+      height: 450px;
+    }
+
+    /* Flip card animation */
+    .flip-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1s;
+    }
+
+    /* Flip on tap (for mobile) */
+    .flip-card-container:active .flip-card {
+      transform: rotateY(180deg);
+    }
+
+    .card-side {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-front {
+      background-image: url('https://raw.githubusercontent.com/roshanthakur8844/25th-December/refs/heads/main/Aa.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .card-back {
+      background-image: url('https://raw.githubusercontent.com/roshanthakur8844/25th-December/refs/heads/main/_insert_%20_some_code_%20_here__20250111_195932_0000.png');
+      background-size: cover;
+      background-position: center;
+      transform: rotateY(180deg);
+    }
+
+    /* Interactive light beam */
+    .light-beam {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255, 255, 0, 0.1), rgba(255, 255, 0, 0) 70%);
+      pointer-events: none;
+      opacity: 0.6;
+      transition: background 0.2s ease-out;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Flip Card Container -->
+<div class="flip-card-container">
+  <div class="flip-card">
+    <!-- Front Side -->
+    <div class="card-side card-front"></div>
+    <!-- Back Side -->
+    <div class="card-side card-back"></div>
+  </div>
+  <!-- Interactive Light Beam -->
+  <div class="light-beam"></div>
+</div>
+
+<!-- Background Music -->
+<audio autoplay loop>
+  <source src="https://raw.githubusercontent.com/roshanthakur8844/25th-December/main/Pink%20Soldiers%20_%20Squid%20Game%20OST%20%5B%20ezmp3.cc%20%5D.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+  const lightBeam = document.querySelector('.light-beam');
+  document.body.addEventListener('mousemove', (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    const beamX = (x / width) * 100;
+    const beamY = (y / height) * 100;
+
+    lightBeam.style.background = `radial-gradient(circle at ${beamX}% ${beamY}%, rgba(255, 255, 0, 0.2), rgba(255, 255, 0, 0) 70%)`;
+  });
+</script>
+
+</body>
+</html>
